@@ -4,4 +4,6 @@ Rails.application.routes.draw do
   resources :images, only: %I[new create show destroy]
 
   root 'application#home'
+
+  resources :feedbacks, only: [:new]
 end
