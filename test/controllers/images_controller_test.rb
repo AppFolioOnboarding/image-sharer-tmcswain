@@ -38,13 +38,18 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     assert_equal %w[flower pink], image.tag_list
   end
 
+  def test_show__displays_image_and_tags
     img_url = 'https://embedwistia-a.akamaihd.net/deliveries/6aed31ef61cf95f5caad5d1a028bc7a06ce0f994.jpg?image_crop_resized=1280x720'
 
-    image = Image.create(url: img_url)
+    image = Image.create(url: img_url, tag_list: 'flower, pink')
 
     get image_path(image.id)
 
     assert_response :success
     assert_select 'img[src=?]', img_url
+    assert_select 'ul' do
+      assert_select 'li', 'flower'
+      assert_select 'li', 'pink'
+    end
   end
 end
