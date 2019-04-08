@@ -1,6 +1,13 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   def home
-    @urls = Image.all.order(created_at: :desc).map(&:url)
+    if params[:tag].blank?
+      scoped_images = Image.all
+      @title = 'All Images'
+    else
+      scoped_images = Image.tagged_with(params[:tag])
+      @title = "Images tagged '#{params[:tag]}'"
+    end
+    @urls = scoped_images.order(created_at: :desc).map(&:url)
   end
 end
