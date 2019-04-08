@@ -2,7 +2,12 @@
 <p>Click the link below to save a link to an image.</p>
 <%= link_to 'New Image', new_image_path %>
 </br></br>
+<h3>Tags</h3>
+<% Image.tag_counts.each do |tag| %>
+    <%= link_to tag, root_path(tag: tag.name), class: 'js-tag-filter' %>
+<% end %>
+</br>
+<h3><%= @title %></h3>
 <% @urls.each do |url| %>
     <%= image_tag url, width: '400' %>
 <% end %>
-
