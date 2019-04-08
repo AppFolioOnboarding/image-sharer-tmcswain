@@ -9,7 +9,7 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
 
   def test_create_with_invalid_url_displays_error
     post images_url,
-         params: { image: { url: 'test.com' } }
+         params: { image: { url: 'test.com', tag_list: '' } }
     assert_response :success
     assert_select 'p', 'Url must be a valid image URL'
   end
@@ -18,15 +18,26 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
     img_url = 'https://embedwistia-a.akamaihd.net/deliveries/6aed31ef61cf95f5caad5d1a028bc7a06ce0f994.jpg?image_crop_resized=1280x720'
     assert_difference('Image.count', 1) do
       post images_url,
-           params: { image: { url: img_url } }
+           params: { image: { url: img_url, tag_list: '' } }
     end
 
     image = Image.last
     assert_redirected_to image
     assert_equal img_url, image.url
+    assert image.tag_list.empty?
   end
 
-  def test_show
+  def test_create__adds_tags
+    img_url = 'https://embedwistia-a.akamaihd.net/deliveries/6aed31ef61cf95f5caad5d1a028bc7a06ce0f994.jpg?image_crop_resized=1280x720'
+    assert_difference %w[Image.count Image.tagged_with("flower").count Image.tagged_with("pink").count], 1 do
+      post images_url,
+           params: { image: { url: img_url, tag_list: 'flower, pink' } }
+    end
+
+    image = Image.last
+    assert_equal %w[flower pink], image.tag_list
+  end
+
     img_url = 'https://embedwistia-a.akamaihd.net/deliveries/6aed31ef61cf95f5caad5d1a028bc7a06ce0f994.jpg?image_crop_resized=1280x720'
 
     image = Image.create(url: img_url)
