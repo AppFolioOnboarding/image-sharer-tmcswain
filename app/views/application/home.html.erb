@@ -8,6 +8,7 @@
 <% end %>
 </br>
 <h3><%= @title %></h3>
-<% @urls.each do |url| %>
-    <%= image_tag url, width: '400' %>
+<% @images.each do |img| %>
+    <%= image_tag img.url, width: '400' %>
+    <%= link_to 'Delete', image_path(img), method: :delete, data: { confirm: 'Are you sure you want to delete this image?' } %>
 <% end %>

@@ -33,6 +33,12 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
         assert_equal '400', img.attr('width')
       end
     end
+
+    assert_select 'a', 'Delete' do |links|
+      links.each_with_index do |link, i|
+        assert_equal image_path(Image.find_by(url: expected_urls[i])), link.attr('href')
+      end
+    end
   end
 
   def test_home__filters_images_by_tag

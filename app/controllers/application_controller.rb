@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
       scoped_images = Image.tagged_with(params[:tag])
       @title = "Images tagged '#{params[:tag]}'"
     end
-    @urls = scoped_images.order(created_at: :desc).map(&:url)
+    @images = scoped_images.order(created_at: :desc)
   end
 end
