@@ -19,6 +19,9 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Updates all packages
+          command: sudo apt-get update
       # Install cmake, build-eseential since gem build with native extension needs it
       - run:
           name: Install cmake needed by rugged
