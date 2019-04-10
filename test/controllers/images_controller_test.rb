@@ -52,4 +52,25 @@ class ImagesControllerTest < ActionDispatch::IntegrationTest
       assert_select 'li', 'pink'
     end
   end
+
+  def test_destroy
+    img_url = 'https://embedwistia-a.akamaihd.net/deliveries/6aed31ef61cf95f5caad5d1a028bc7a06ce0f994.jpg?image_crop_resized=1280x720'
+
+    image = Image.create(url: img_url, tag_list: 'flower, pink')
+
+    assert_difference('Image.count', -1) do
+      delete image_path(image)
+    end
+    assert_redirected_to root_path
+    assert_equal 'Image was successfully deleted', flash[:success]
+  end
+
+  def test_destroy__fails_for_nonexistent_image
+    assert_difference('Image.count', 0) do
+      delete image_path(123_456)
+    end
+
+    assert_redirected_to root_path
+    assert_equal 'Image could not be found', flash[:error]
+  end
 end
