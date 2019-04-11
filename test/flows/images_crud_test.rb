@@ -74,7 +74,7 @@ class ImagesCrudTest < FlowTestCase
     assert_equal 2, images_index_page.images.count
     assert_not images_index_page.showing_image?(url: cat_url)
 
-    images_index_page = images_index_page.clear_tag_filter!
+    images_index_page = PageObjects::Images::IndexPage.visit
     assert_equal 3, images_index_page.images.count
   end
 end
