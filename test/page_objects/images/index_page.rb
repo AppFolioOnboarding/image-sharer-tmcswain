@@ -1,9 +1,11 @@
+require 'page_objects/images/image_card'
+
 module PageObjects
   module Images
     class IndexPage < PageObjects::Document
       path :root
 
-      collection :images, locator: '.images', item_locator: '.image', contains: ImageCard
+      collection :images, locator: '.images', item_locator: '.image', contains: ::PageObjects::Images::ImageCard
 
       def add_new_image!
         node.click_on('New Image')
