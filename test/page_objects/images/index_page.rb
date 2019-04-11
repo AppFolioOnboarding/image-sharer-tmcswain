@@ -1,7 +1,7 @@
 module PageObjects
   module Images
     class IndexPage < PageObjects::Document
-      path :images
+      path :root
 
       collection :images, locator: '#TODO', item_locator: '#TODO', contains: ImageCard do
         def view!
@@ -15,11 +15,14 @@ module PageObjects
       end
 
       def showing_image?(url:, tags: nil)
-        # TODO
-      end
+        matching_images = images.find_all { |img| img.url == url }
+        return true if tags.blank? && matching_images.count.positive?
 
-      def clear_tag_filter!
-        # TODO
+        matching_images.each do |img|
+          return true if img.tags.map(&:text) == tags
+        end
+
+        false
       end
     end
   end

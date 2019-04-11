@@ -1,10 +1,10 @@
 <h1>Add a new image link</h1>
 
-<%= form_with scope: :image, url: images_path, local: true do |form| %>
+<%= form_for @image, url: images_path, local: true do |form| %>
     <% if @image.errors.any? %>
       <div>
         <% @image.errors.full_messages.each do |msg| %>
-          <p><%= msg %></p>
+          <p class="error"><%= msg %></p>
         <% end %>
       </div>
     <% end %>
@@ -15,7 +15,7 @@
 
     <p>
       <%= form.label 'List of comma-separated tags' %><br>
-      <%= form.text_field :tag_list %>
+      <%= form.text_field :tag_list, value: @image.tag_list.to_s%>
     </p>
 
     <p>

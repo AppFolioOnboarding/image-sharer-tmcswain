@@ -1,8 +1,11 @@
 module PageObjects
   module Images
     class ImageCard < AePageObjects::Element
+      element :image_tag, locator: 'img'
+      collection :tags, locator: 'ul', item_locator: 'li'
+
       def url
-        node.find('img')[:src]
+        image_tag.node[:src]
       end
 
       def tags

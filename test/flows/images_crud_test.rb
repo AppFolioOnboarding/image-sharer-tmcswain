@@ -7,17 +7,17 @@ class ImagesCrudTest < FlowTestCase
     new_image_page = images_index_page.add_new_image!
 
     tags = %w[foo bar]
-    new_image_page = new_image_page.create_image!(
-      url: 'invalid',
+    new_image_page = new_image_page.create_image_expecting_failure!(
+      img_url: 'invalid',
       tags: tags.join(', ')
     ).as_a(PageObjects::Images::NewPage)
-    assert_equal 'must be a valid URL', new_image_page.url.error_message
+    assert_includes new_image_page.error_messages, 'Url must be a valid image URL'
 
-    image_url = 'https://media3.giphy.com/media/EldfH1VJdbrwY/200.gif'
+    image_url = 'http://www.ugly-cat.com/ugly-cats/uglycat041.jpg'
     new_image_page.url.set(image_url)
 
     image_show_page = new_image_page.create_image!
-    assert_equal 'You have successfully added an image.', image_show_page.flash_message(:success)
+    assert_equal 'Image was successfully created', image_show_page.flash_message(:success)
 
     assert_equal image_url, image_show_page.image_url
     assert_equal tags, image_show_page.tags
