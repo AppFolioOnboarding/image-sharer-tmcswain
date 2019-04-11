@@ -8,14 +8,11 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header title={'Tell us what you think'} />
-        /* Put your components here: Flash Message, Form, Footer */
+        <Header title="Tell us what you think" />
         <Footer />
       </div>
-    )
+    );
   }
 }
 
-export default inject(
-  'stores'
-)(App);
+export default inject('stores')(App);

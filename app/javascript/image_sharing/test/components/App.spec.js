@@ -11,7 +11,8 @@ describe('<App />', () => {
   it('renders Header', () => {
     const wrapper = shallow(<App stores={{}} />).dive();
     expect(wrapper.find(Header)).to.have.length(1);
-  })
+  });
+
   it('renders Footer', () => {
     const wrapper = shallow(<App stores={{}} />).dive();
     expect(wrapper.find(Footer)).to.have.length(1);
