@@ -42,15 +42,12 @@ class ImagesCrudTest < FlowTestCase
     image_to_delete = images_index_page.images.find do |image|
       image.url == ugly_cat_url
     end
-    image_show_page = image_to_delete.view!
 
-    image_show_page.delete do |confirm_dialog|
-      assert_equal 'Are you sure?', confirm_dialog.text
-      confirm_dialog.dismiss
-    end
+    confirm_dialog = image_to_delete.click_delete!
+    assert_equal 'Are you sure you want to delete this image?', confirm_dialog
 
-    images_index_page = image_show_page.delete_and_confirm!
-    assert_equal 'You have successfully deleted the image.', images_index_page.flash_message(:success)
+    image_to_delete.click_delete_and_confirm!
+    assert_equal 'Image was successfully deleted', images_index_page.flash_message(:success)
 
     assert_equal 1, images_index_page.images.count
     assert_not images_index_page.showing_image?(url: ugly_cat_url)

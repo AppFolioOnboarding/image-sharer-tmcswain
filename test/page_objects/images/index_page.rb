@@ -3,11 +3,7 @@ module PageObjects
     class IndexPage < PageObjects::Document
       path :root
 
-      collection :images, locator: '#TODO', item_locator: '#TODO', contains: ImageCard do
-        def view!
-          # TODO
-        end
-      end
+      collection :images, locator: '.images', item_locator: '.image', contains: ImageCard
 
       def add_new_image!
         node.click_on('New Image')

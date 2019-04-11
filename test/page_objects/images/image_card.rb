@@ -8,8 +8,16 @@ module PageObjects
         image_tag.node[:src]
       end
 
-      def tags
-        # TODO
+      def click_delete!
+        node.session.dismiss_confirm do
+          node.click_on 'Delete'
+        end
+      end
+
+      def click_delete_and_confirm!
+        node.session.accept_confirm do
+          node.click_on 'Delete'
+        end
       end
 
       def click_tag!(tag_name)
