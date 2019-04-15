@@ -7,6 +7,7 @@ class ImagesController < ApplicationController
     @image = Image.new(article_params)
     if @image.save
       redirect_to @image
+      flash[:success] = 'Image was successfully created'
     else
       render 'new'
     end
