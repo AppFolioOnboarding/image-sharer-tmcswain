@@ -1,7 +1,9 @@
 import { expect } from 'chai';
 import { describe, it, beforeEach } from 'mocha';
+import sinon from 'sinon';
 
 import FeedbackStore from '../../stores/FeedbackStore';
+import PostFeedbackService from '../../services/PostFeedbackService';
 
 describe('FeedbackStore', () => {
   let store;
@@ -22,5 +24,18 @@ describe('FeedbackStore', () => {
   it('sets comments', () => {
     store.setComments('some comments');
     expect(store.comments).to.equal('some comments');
+  });
+
+  it('submits Feedback to the database', () => {
+    store.setUserName('taylor');
+    store.setComments('some comments');
+
+    const stub = sinon.stub(PostFeedbackService, 'postNewFeedback');
+    store.onSubmit();
+
+    sinon.assert.calledWith(
+      stub,
+      { feedback: { username: 'taylor', comments: 'some comments' } }
+    );
   });
 });

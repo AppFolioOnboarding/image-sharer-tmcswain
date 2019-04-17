@@ -7,7 +7,7 @@ class FeedbackForm extends Component {
   render() {
     return (
       <div>
-        <form>
+        <form onSubmit={this.props.stores.feedbackStore.onSubmit}>
           <div>
             <label className='js-username' htmlFor='js-username-input'>
               Your Name:

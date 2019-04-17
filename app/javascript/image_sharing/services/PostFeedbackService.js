@@ -1,7 +1,9 @@
-// import { post } from '../utils/helper';
+import { post } from '../utils/helper';
 
-export class PostFeedbackService {
-  /* Implement your service */
+class PostFeedbackService {
+  static postNewFeedback(props) {
+    post('http://localhost:3000/api/feedbacks', props);
+  }
 }
 
 export default PostFeedbackService;
