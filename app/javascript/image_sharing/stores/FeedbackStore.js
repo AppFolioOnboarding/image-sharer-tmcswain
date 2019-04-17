@@ -1,5 +1,19 @@
+import { observable, action } from 'mobx';
+
+
 class FeedbackStore {
-  /* Implement your feedback store*/
+  @observable userName = 'enter username';
+  @observable comments = 'comments'
+
+  @action
+  setUserName = (val) => {
+    this.userName = val;
+  }
+
+  @action
+  setComments = (val) => {
+    this.comments = val;
+  }
 }
 
 export default FeedbackStore;
